@@ -2,7 +2,7 @@
 
 void main() {
 	printf("Hello World!");
-	//여기는 주석입니다.
+	//C programming
 	//This is a comment.
 	//Commit
 }
