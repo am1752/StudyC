@@ -8,15 +8,12 @@
 
 void main() {
 	//type here
-	int a=1;
-	int b;
-	
-	printf("%d", a);
-	printf("Be happy\n");
-	printf("12345678901234567890\n");
-	printf("My\tfriend\n");
-	printf("Goot\bd\tchance\n");
-	printf("Cow\rW\a\n");
+		
+	printf("%d\n", 100);
+	printf("%lf\n", 3.141592);
+	printf("%.1lf\n", 3.141592);//소숫점 첫번째자리만 출력
+	printf("%.10lf\n", 3.141592);
+	printf("%.1lf + %.1lf = %.1lf\n", 10.2, 3.4, 10.2 + 3.4);
 			
 	system("pause");
 }
