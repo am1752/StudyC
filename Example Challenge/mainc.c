@@ -11,7 +11,7 @@ void main() {
 	int w;
 	printf("몸무게(kg)와 키(cm) 입력 : ");
 	scanf_s("%d%lf", &w, &h);
-	h = 0.1*h;
+	h *= 0.1;
 	double bmi = w/(h*h);
 	char a[100]="표준입니다";
 	char b[100] = "체중관리가 필요합니다";
@@ -19,7 +19,7 @@ void main() {
 	
 	int c= ((bmi >= 20) && (bmi < 25));
 	char res[100];
-	(b) ? (strcpy(res,a)) : (strcpy(res,b));
+	(c) ? (strcpy(res,a)) : (strcpy(res,b));
 	printf("%.1lf %.1lf\n", bmi, h*h);
 	printf("%s\n", res);
 
