@@ -36,7 +36,7 @@ int main(void)
     int result = 1;
     int cnt = 0;
     FILE* a;
-    char buffer[10000];
+    char *buffer;
     while (1) {
         if (kbhit()) {
             if (getch() == 'a') break;
@@ -54,15 +54,20 @@ int main(void)
                 strcat(path, fd.name);
                 if (check(fd.name, cnt) == 1)
                 {
-
+                    buffer = malloc(10000);
                     strcpy(n[cnt++], fd.name);
-                    a = fopen(path, "r");
+                    a = fopen(path, "rt");
                     if (fgets(buffer, sizeof(buffer), a) != NULL) {
                         printf("%s\n", buffer);
+                        
                     }
+                    
                     //printf("%s\n", fd.name);
+                    free(buffer);
+                    fclose(a);
 
                 }
+                
 
 
             } while (_findnext(handle, &fd) != -1);
