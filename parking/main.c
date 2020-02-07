@@ -70,7 +70,7 @@ void print() {
 
 //주차관리
 void parking() {
-    int n,num;
+    int n,num,d=0;
     printf("> 차번 입력(숫자 4자리) : ");
     scanf_s("%d", &n);
     
@@ -84,31 +84,52 @@ void parking() {
     }
 
     else {
-        printf("@주차 가능 공간 : B1층[%d대] B2층[%d대] B3층[%d대]\n", park[1], park[2], park[3]);
         int i = 1;
-
-
         while (1) {
+            printf("@주차 가능 공간 : B1층[%d대] B2층[%d대] B3층[%d대]\n", park[1], park[2], park[3]);
             printf("[B%d층]=========================\n\n", i);
-            
-            output(i);
 
+            output(i);
             printf(">주차 번호 입력 (다른층 0, 취소 -1) : ");
             scanf_s("%d", &num);
             printf("\n");
 
+
             if (num == 0) {
-                if (i == 3) i -= 1;
-                else i += 1;
+                if (i == 3) d = 1;
+                else if (i == 1) d = 0;
+
+                if (d == 0) i++;
+                else i--;
+
                 continue;
             }
             else if (num == -1) break;
 
             else {
-                if (num <= 5) space[i][1][num] = n;
-                else space[i][2][num - 5] = n;
-                park[i]--;
-                break;
+                if (num <= 5) {
+                    if (space[i][1][num] > 10 || num < 1 || num > 10) {
+                        printf("@이미 주차되었거나 없는 번호입니다.\n\n");
+                        continue;
+                    }
+                    else {
+                        space[i][1][num] = n;
+                        park[i]--;
+                        break;
+                    }
+                }
+
+                else {
+                    if (space[i][2][num - 5] > 10 || num < 1 || num > 10) {
+                        printf("@이미 주차되었거나 없는 번호입니다.\n\n");
+                        continue;
+                    }
+                    else {
+                        space[i][2][num - 5] = n;
+                        park[i]--;
+                        break;
+                    }
+                }
             }
         }
     }
@@ -147,8 +168,10 @@ void outparking() {
    
 }
 
+//지정차량 등록
 void reg() {
     int f, n,num;
+
     while (1) {
         printf("> 층과 번호 입력(종료 0) : ");
         scanf_s("%d", &f);
@@ -156,6 +179,11 @@ void reg() {
         scanf_s("%d", &n);
         printf("> 등록차량 번호 입력 : ");
         scanf_s("%d", &num);
+
+        if (check(num) == 0) {
+            printf("@ 이미 등록되었습니다.\n\n");
+            return;
+        }
 
         park[f]--;
         res[f][n] = num;
