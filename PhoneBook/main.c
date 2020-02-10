@@ -20,8 +20,10 @@ typedef struct _phonebook{
 phonebook phone;
 char naa[_MAX][20];
 //int na[_MAX][_MAX];
-int index = 0,ii=0;
+int index = 0; //찾는 번호의 인덱스
+int ii = 0;//동명이인의 인덱스 번호(즉, 동명이인의 이름갯수)
 
+//메뉴 선택
 int output() {
     int n;
     printf("------------- 메뉴 --------------\n");
@@ -37,6 +39,8 @@ int output() {
     return n;
 }
 
+
+//이름 있는지 확인
 int check(char name[],int cnt) {
     for (int i = 0; i < cnt; i++) {
         if (strcmp(name, phone[i].name) == 0) {
@@ -47,6 +51,7 @@ int check(char name[],int cnt) {
     return 1;
 }
 
+//삭제 하고 한 칸씩 앞으로
 void kk(int cnt) {
     //printf("%d %d\n", cnt, index);
     for (int i = index; i < cnt; i++) {
@@ -55,6 +60,7 @@ void kk(int cnt) {
     }
 }
 
+//동명이인 확인
 int chk(char name[]) {
     
     //printf("%d\n", ii);
@@ -71,6 +77,7 @@ int chk(char name[]) {
     return 0;
 }
 
+//동명이인 일 때 원하는 번호 삭제 및 변경
 void same(char name[],char num[],int cnt,int nn) {//nn이 0일 경우 삭제,1일 경우 변화
     for (int i = 0; i < cnt; i++) {
         if (strcmp(name, phone[i].name) == 0 && strcmp(num, phone[i].number) == 0) {
@@ -86,6 +93,7 @@ void same(char name[],char num[],int cnt,int nn) {//nn이 0일 경우 삭제,1일 경우 
     printf("입력된 정보가 없습니다.\n\n");
 }
 
+//번호 입력
 int InputPhoneData(int count) {
     char name[10], num[20];
     if (count >= 30) {
@@ -98,19 +106,19 @@ int InputPhoneData(int count) {
     scanf_s("%s",name ,sizeof(name));
     scanf_s("%s", num,sizeof(num));
 
-    if (check(name,count)==1) {
+    if (check(name,count)==1) {//동명이이인이 아닌경우
         strcpy(phone[count].name, name);
         strcpy(phone[count].number, num);
         return 1;
     }
     else {
-        if (strcmp(phone[index].number, num) == 0) {
+        if (strcmp(phone[index].number, num) == 0) {//같은 정보 다시 입력
             printf("이미 등록된 정보입니다. \n\n");
             return 0;
         }
         else {
             printf("동명이인이 있습니다!!!\n\n");
-            if (chk(name) == 0) {
+            if (chk(name) == 0) {//같은 이름이 처음 나온경우
                 strcpy(naa[ii], name);
                 ii++;
                 //printf("%d %s\n", ii, naa[ii]);
@@ -119,7 +127,7 @@ int InputPhoneData(int count) {
                 strcpy(phone[count].number, num);
                 return 1;
             }
-            else {
+            else {//해당이름이 이미 동명이인인 경우
                 //printf("%d %s", ii, naa[ii]);
                 strcpy(phone[count].name, name);
                 strcpy(phone[count].number, num);
@@ -132,6 +140,7 @@ int InputPhoneData(int count) {
     
 }
 
+//모든 정보 출력
 void ShowAllData(int count) {
     //InputPhoneData(count);
     for (int i = 0; i < count; i++) {
@@ -140,6 +149,7 @@ void ShowAllData(int count) {
     printf("\n");
 }
 
+//해당 정보 출력
 void SearchPhoneData(int cnt) {
     char name[10];
     printf("이름을 입력해주세요. : ");
@@ -161,6 +171,7 @@ void SearchPhoneData(int cnt) {
     printf("%s님의 번호가 입력되지 않았습니다.\n\n", name);
 }
 
+//해당 정보 삭제
 int DeletePhoneData(int cnt) {
     char name[10];
     char nn[20];
@@ -185,6 +196,7 @@ int DeletePhoneData(int cnt) {
     return 0;
 }
 
+//해당 정보 변경
 void ChangePhoneData(int cnt) {
     char name[10];
     char num[20],pnum[20];

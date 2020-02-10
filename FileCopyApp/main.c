@@ -12,30 +12,35 @@
 #include <string.h>
 
 // 메인함수
-int main(void) 
+int main(void)
 {
     FILE* ifp, * ofp;
-    char str[80];
-    char* res;
+    char name[20];
+    int kor, eng, mat;
+    int total;
+    double avg;
+    int res;
 
-    ifp = fopen("aa.txt", "r");
+    ifp = fopen("aaa.txt", "r");
+
     if (ifp == NULL) {
-        printf("파일 오픈 실패");
-        return EXIT_FAILURE;
+        printf("파일 열기 실패\n");
+        return 1;
     }
 
-    ofp = fopen("bb.txt", "w");
+    ofp = fopen("bbb.txt", "w");
+
     if (ofp == NULL) {
-        printf("파일 생성 실패");
-        return EXIT_FAILURE;
+        printf("파일 생성 실패\n");
+        return 1;
     }
 
     while (1) {
-        res = fgets(str, sizeof(str), ifp);
-        if (res == NULL) break;
-        str[strlen(str) - 1] = '\0';
-        fputs(str, ofp);
-        fputs(" ", ofp);
+        res = fscanf(ifp, "%s%d%d%d", name, &kor, &eng, &mat);
+        if (res == EOF) break;
+        total = kor + eng + mat;
+        avg = total / 3.0;
+        fprintf(ofp, "%s%5d%7.1lf\n", name, total, avg);
     }
 
     fclose(ifp);
